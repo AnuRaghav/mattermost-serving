@@ -1,0 +1,24 @@
+{"message_id": "mm-001", "text": "Hey, can you share the agenda for the retro?", "channel_type": "public", "prior_violation_count": 0}
+{"message_id": "mm-002", "text": "Pushed a fix to main — CI should be green now.", "channel_type": "public", "prior_violation_count": 0}
+{"message_id": "mm-003", "text": "DM me if you need the API keys for the sandbox.", "channel_type": "dm", "prior_violation_count": 0}
+{"message_id": "mm-004", "text": "This design looks great, ship it.", "channel_type": "private", "prior_violation_count": 0}
+{"message_id": "mm-005", "text": "I'm blocked on the DB migration — who owns that?", "channel_type": "public", "prior_violation_count": 0}
+{"message_id": "mm-006", "text": "Lunch at 12:30 by the usual spot?", "channel_type": "public", "prior_violation_count": 0}
+{"message_id": "mm-007", "text": "Thanks for covering on-call last night!", "channel_type": "private", "prior_violation_count": 0}
+{"message_id": "mm-008", "text": "Reminder: release window is Friday 2pm ET.", "channel_type": "public", "prior_violation_count": 0}
+{"message_id": "mm-009", "text": "Could you review the security checklist before we merge?", "channel_type": "private", "prior_violation_count": 0}
+{"message_id": "mm-010", "text": "The logs show a spike in 500s after the last deploy.", "channel_type": "public", "prior_violation_count": 0}
+{"message_id": "mm-011", "text": "I'm frustrated with the delays but let's stay constructive.", "channel_type": "public", "prior_violation_count": 0}
+{"message_id": "mm-012", "text": "You're completely useless — learn to do your job.", "channel_type": "public", "prior_violation_count": 1}
+{"message_id": "mm-013", "text": "Nobody cares what you think, just disappear.", "channel_type": "dm", "prior_violation_count": 2}
+{"message_id": "mm-014", "text": "I hope you get fired, you're a waste of space.", "channel_type": "private", "prior_violation_count": 0}
+{"message_id": "mm-015", "text": "That's the dumbest thing anyone has said all week.", "channel_type": "public", "prior_violation_count": 0}
+{"message_id": "mm-016", "text": "go die nobody wants you here", "channel_type": "public", "prior_violation_count": 3}
+{"message_id": "mm-017", "text": "Standup notes: infra ticket ING-441 is in progress.", "channel_type": "public", "prior_violation_count": 0}
+{"message_id": "mm-018", "text": "Merged the feature flag PR; rollout at 10% canary.", "channel_type": "private", "prior_violation_count": 0}
+{"message_id": "mm-019", "text": "On PTO tomorrow — ping @sarah for approvals.", "channel_type": "public", "prior_violation_count": 0}
+{"message_id": "mm-020", "text": "shut up idiot", "channel_type": "dm", "prior_violation_count": 1}
+{"message_id": "mm-021", "text": "Docs updated in Confluence under /engineering/runbooks.", "channel_type": "public", "prior_violation_count": 0}
+{"message_id": "mm-022", "text": "Repro steps: 1) login 2) open channel 3) scroll — crash.", "channel_type": "private", "prior_violation_count": 0}
+{"message_id": "mm-023", "text": "Celebrating the launch — great teamwork everyone!", "channel_type": "public", "prior_violation_count": 0}
+{"message_id": "mm-024", "text": "I hate this codebase and everyone who wrote it.", "channel_type": "public", "prior_violation_count": 0}
