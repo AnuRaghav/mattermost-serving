@@ -9,5 +9,6 @@ Copy numbers from `scripts/benchmark.py` output or from CSV rows under `results/
 | multiworker_http       |          |             |        |        |        |                |            |       |
 | best_combined          |          |             |        |        |        |                |            |       |
 | larger_instance_cpu    |          |             |        |        |        |                |            |       |
+| ray_serve_http         |          |             |        |        |        |                |            |       |
 
 Optional: append machine-readable rows with `--csv results/benchmark_runs.csv --label <experiment_id>`.

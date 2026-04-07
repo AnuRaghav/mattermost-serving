@@ -13,6 +13,7 @@ The **baseline artifact is a placeholder** trained on a handful of hand-written 
 | `multiworker_http` | System-level: uvicorn `--workers N` (`Dockerfile.multiworker`) |
 | `best_combined` | Smaller artifact + multi-worker (or your best tuning) |
 | `larger_instance_cpu` | Same stack on a larger Chameleon flavor (optional) |
+| `ray_serve_http` | Optional extra credit: Ray Serve ingress (`Dockerfile.ray`), same `/health` + `/predict` API |
 
 Record numbers in [`results/SERVING_METRICS.md`](results/SERVING_METRICS.md) and/or CSV from the benchmark script.
 
@@ -51,8 +52,10 @@ mattermost-serving/
   sample_data/         # JSONL payloads for load tests
   results/             # benchmark CSV + metrics template
   requirements.txt
+  requirements-ray.txt # Ray Serve (optional extra-credit image)
   Dockerfile           # single worker
   Dockerfile.multiworker
+  Dockerfile.ray       # Ray Serve
 ```
 
 ## Local sanity test
@@ -122,6 +125,37 @@ docker run --rm -p 8000:8000 -e UVICORN_WORKERS=4 mattermost-serving:multi
 ```
 
 Each worker loads its own copy of the sklearn pipeline (higher memory use; better CPU utilization under concurrent load).
+
+## Extra credit: Ray Serve (not FastAPI / not Triton)
+
+This path uses **Ray Serve** with a Starlette-style deployment class that handles **`GET /health`** and **`POST /predict`** the same way as the FastAPI app, so [`scripts/benchmark.py`](scripts/benchmark.py) works unchanged. Inference logic is shared via [`app/predict_service.py`](app/predict_service.py).
+
+**Build and run (Linux x86_64 VM — e.g. Chameleon):** Ray publishes manylinux wheels; on some ARM laptops `pip install ray` may fail.
+
+```bash
+python scripts/train_placeholder_model.py
+docker build -t mattermost-serving:ray -f Dockerfile.ray .
+docker run --rm --shm-size=1g -p 8000:8000 mattermost-serving:ray
+```
+
+`--shm-size=1g` avoids Ray instability from Docker’s default small `/dev/shm`.
+
+Optional environment variables (inside the container):
+
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `RAY_SERVE_HOST` | `0.0.0.0` | HTTP bind host |
+| `RAY_SERVE_PORT` | `8000` | HTTP port |
+| `RAY_SERVE_NUM_REPLICAS` | `1` | Number of Serve replicas (scale-out comparison) |
+
+Example benchmark row label:
+
+```bash
+python scripts/benchmark.py --url http://127.0.0.1:8000 --concurrency 5 --requests 1000 \
+  --csv results/benchmark_runs.csv --label ray_serve_http
+```
+
+**PDF / write-up (meaningful improvement — adapt to what you measure):** Ray Serve gives a **deployment-centric** serving model (replicas, optional resource options, same process cluster as future Ray Data/Train if you grow the system) distinct from “a single FastAPI + uvicorn process.” A concrete example is turning **`RAY_SERVE_NUM_REPLICAS`** above 1 on a multi-core Chameleon VM and comparing tail latency and throughput under concurrent `/predict` load against the baseline `Dockerfile` row—then explain whether replica overhead or queueing dominated on your instance.
 
 ## Benchmark
 

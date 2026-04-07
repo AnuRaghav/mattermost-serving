@@ -1,0 +1,2 @@
+# Ray Serve (extra-credit path). Wheels target Linux x86_64 (e.g. Chameleon); many ARM laptops have no ray wheel.
+ray[serve]>=2.9.0,<3.0.0

@@ -5,7 +5,7 @@ from typing import Optional
 from fastapi import FastAPI
 
 from app.model_loader import ToxicityModel
-from app.policy import probability_to_risk_and_action
+from app.predict_service import run_predict
 from app.schemas import PredictRequest, PredictResponse
 from app.settings import settings
 
@@ -43,37 +43,4 @@ def health() -> dict:
 
 @app.post("/predict", response_model=PredictResponse)
 def predict(body: PredictRequest) -> PredictResponse:
-    version = settings.model_version
-    if _model is None or not _model.is_loaded:
-        logger.warning("Predict fallback: model not loaded (message_id=%s)", body.message_id)
-        return PredictResponse(
-            message_id=body.message_id,
-            model_version=version,
-            toxicity_probability=None,
-            risk_bucket="unknown",
-            action_recommendation="allow_and_log",
-            inference_status="fallback",
-        )
-
-    try:
-        prob = _model.predict_proba(body.text)
-    except Exception as e:
-        logger.exception("Predict fallback: inference error (message_id=%s): %s", body.message_id, e)
-        return PredictResponse(
-            message_id=body.message_id,
-            model_version=version,
-            toxicity_probability=None,
-            risk_bucket="unknown",
-            action_recommendation="allow_and_log",
-            inference_status="fallback",
-        )
-
-    risk, action = probability_to_risk_and_action(prob)
-    return PredictResponse(
-        message_id=body.message_id,
-        model_version=version,
-        toxicity_probability=prob,
-        risk_bucket=risk,
-        action_recommendation=action,
-        inference_status="success",
-    )
+    return run_predict(_model, body)
